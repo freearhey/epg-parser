@@ -1,0 +1,37 @@
+{
+  "name": "epg-parser",
+  "version": "0.1.0",
+  "description": "Node.js CLI tool to parse EPG files",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/freearhey/epg-parser.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "epg",
+    "xmltv",
+    "parser"
+  ],
+  "author": "Arhey",
+  "license": "MIT",
+  "jest": {
+    "roots": [
+      "test"
+    ],
+    "testRegex": "test/(.*?/)?.*test.js$"
+  },
+  "dependencies": {
+    "xml-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "jest": "^24.9.0"
+  }
+}
