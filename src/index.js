@@ -1,4 +1,4 @@
-import convert from 'xml-js'
+const convert = require('xml-js')
 
 class Model {
   constructor(data) {
@@ -69,7 +69,7 @@ class Programme extends Model {
   }
 }
 
-export default {
+module.exports = {
   parse(source) {
     const obj = convert.xml2js(source, { compact: false, trim: true })
     const tv = obj.elements.find(el => el.name === 'tv')
