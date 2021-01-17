@@ -1,6 +1,6 @@
 {
   "name": "epg-parser",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Node.js CLI tool to parse EPG files",
   "main": "src/index.js",
   "scripts": {
