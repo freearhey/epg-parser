@@ -52,24 +52,31 @@ it('can parse xmltv string', () => {
         start: '20080715003000 -0600',
         stop: '20080715010000 -0600',
         channel: 'I10436.labs.zap2it.com',
-        title: [ { lang: 'en', value: 'NOW on PBS' } ],
-        desc:
-         [ { lang: 'en',
-             value:
-              'Jordan\'s Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East.' } ],
+        title: [{ lang: 'en', value: 'NOW on PBS' }],
+        desc: [
+          {
+            lang: 'en',
+            value:
+              "Jordan's Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East."
+          }
+        ],
         date: ['20080711'],
-        category:
-         [ { lang: 'en', value: 'Newsmagazine' },
-           { lang: 'en', value: 'Interview' } ],
-        episodeNum:
-         [ { system: 'dd_progid', value: 'EP01006886.0028' },
-           { system: 'onscreen', value: '427' } ],
+        category: [
+          { lang: 'en', value: 'Newsmagazine' },
+          { lang: 'en', value: 'Interview' }
+        ],
+        episodeNum: [
+          { system: 'dd_progid', value: 'EP01006886.0028' },
+          { system: 'onscreen', value: '427' }
+        ],
         previouslyShown: [{ start: '20080711000000' }],
         subtitles: [{ type: 'teletext' }],
-        rating: [{
-          system: 'VCHIP',
-          value: 'TV-G'
-        }],
+        rating: [
+          {
+            system: 'VCHIP',
+            value: 'TV-G'
+          }
+        ],
         credits: [
           {
             role: 'actor',
@@ -92,10 +99,14 @@ it('can parse xmltv string', () => {
             name: 'Drew Carey'
           }
         ],
-        icon: ['http://imageswoapi.whatsonindia.com/WhatsOnTV/images/ProgramImages/xlarge/38B4DE4E9A7132257749051B6C8B4F699DB264F4V.jpg'],
-        audio: [{
-          stereo: 'stereo'
-        }]
+        icon: [
+          'http://imageswoapi.whatsonindia.com/WhatsOnTV/images/ProgramImages/xlarge/38B4DE4E9A7132257749051B6C8B4F699DB264F4V.jpg'
+        ],
+        audio: [
+          {
+            stereo: 'stereo'
+          }
+        ]
       },
       {
         start: '20080715010000 -0600',
@@ -121,5 +132,5 @@ it('can parse really big file', () => {
   let content = fs.readFileSync('test/data/large.xml')
   let result = parser.parse(content)
 
-  expect(result.channels.length).toEqual(529)
+  expect(result.channels.length).toEqual(85)
 })
