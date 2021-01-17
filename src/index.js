@@ -7,11 +7,13 @@ class Model {
   }
 
   _get(name) {
-    return this._elements.filter(el => el.name === name).map(el => {
-      const value = el.elements && el.elements.length ? { value: el.elements[0].text } : {}
+    return this._elements
+      .filter(el => el.name === name)
+      .map(el => {
+        const value = el.elements && el.elements.length ? { value: el.elements[0].text } : {}
 
-      return Object.assign({}, el.attributes, value)
-    })
+        return Object.assign({}, el.attributes, value)
+      })
   }
 }
 
@@ -44,28 +46,40 @@ class Programme extends Model {
     this.icon = this._get('icon').map(el => el.src)
 
     const rating = this._elements.find(el => el.name === 'rating')
-    this.rating = rating && rating.elements.length ? rating.elements.map(el => {
-      return {
-        system: rating.attributes.system,
-        value: el.elements[0].text
-      }
-    }) : []
-    
-    const credits = this._elements.find(el => el.name === 'credits')
-    this.credits = credits && credits.elements.length ? credits.elements.map(el => {
-      return {
-        role: el.name,
-        name: el.elements[0].text
-      }
-    }) : []
+    this.rating =
+      rating && rating.elements.length
+        ? rating.elements
+            .map(el => {
+              if (!el.elements) return null
 
-    this.audio = this._elements.filter(el => el.name === 'audio').map(el => {
-      return el.elements.map(el => {
-        return {
-          [el.name]: el.elements[0].text
-        }
-      })[0]
-    })
+              return {
+                system: rating.attributes.system,
+                value: el.elements[0].text
+              }
+            })
+            .filter(i => i)
+        : []
+
+    const credits = this._elements.find(el => el.name === 'credits')
+    this.credits =
+      credits && credits.elements.length
+        ? credits.elements.map(el => {
+            return {
+              role: el.name,
+              name: el.elements[0].text
+            }
+          })
+        : []
+
+    this.audio = this._elements
+      .filter(el => el.name === 'audio')
+      .map(el => {
+        return el.elements.map(el => {
+          return {
+            [el.name]: el.elements[0].text
+          }
+        })[0]
+      })
   }
 }
 
