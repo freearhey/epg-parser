@@ -85,6 +85,7 @@ class Programme extends Model {
 
 module.exports = {
   parse(source) {
+    source = source.replace(/&/g, '&amp;')
     const obj = convert.xml2js(source, { compact: false, trim: true })
     const tv = obj.elements.find(el => el.name === 'tv')
     const channels = tv.elements.filter(el => el.name === 'channel').map(el => new Channel(el))
