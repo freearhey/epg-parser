@@ -50,7 +50,7 @@ class Programme extends Model {
       rating && rating.elements.length
         ? rating.elements
             .map(el => {
-              if (!el.elements) return null
+              if (!el.elements || !rating.attributes) return null
 
               return {
                 system: rating.attributes.system,
