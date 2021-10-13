@@ -5,20 +5,6 @@ it('can parse xmltv string', () => {
   let content = fs.readFileSync('test/data/basic.xml')
   let result = parser.parse(content)
 
-  result.channels = result.channels.map(c => {
-    delete c._attributes
-    delete c._elements
-
-    return c
-  })
-
-  result.programs = result.programs.map(p => {
-    delete p._attributes
-    delete p._elements
-
-    return p
-  })
-
   expect(result).toEqual({
     channels: [
       {
