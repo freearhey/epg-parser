@@ -16,7 +16,7 @@ class Model {
       })
   }
 
-  toString() {
+  toObject() {
     const channel = this
     delete channel._attributes
     delete channel._elements
@@ -102,10 +102,10 @@ module.exports = {
     if (Array.isArray(tv.elements)) {
       channels = tv.elements
         .filter(el => el.name === 'channel')
-        .map(el => new Channel(el).toString())
+        .map(el => new Channel(el).toObject())
       programs = tv.elements
         .filter(el => el.name === 'programme')
-        .map(el => new Programme(el).toString())
+        .map(el => new Programme(el).toObject())
     }
 
     return {
