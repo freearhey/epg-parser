@@ -15,6 +15,14 @@ class Model {
         return Object.assign({}, el.attributes, value)
       })
   }
+
+  toString() {
+    const channel = this
+    delete channel._attributes
+    delete channel._elements
+
+    return channel
+  }
 }
 
 class Channel extends Model {
@@ -92,8 +100,12 @@ module.exports = {
     let channels = []
     let programs = []
     if (Array.isArray(tv.elements)) {
-      channels = tv.elements.filter(el => el.name === 'channel').map(el => new Channel(el))
-      programs = tv.elements.filter(el => el.name === 'programme').map(el => new Programme(el))
+      channels = tv.elements
+        .filter(el => el.name === 'channel')
+        .map(el => new Channel(el).toString())
+      programs = tv.elements
+        .filter(el => el.name === 'programme')
+        .map(el => new Programme(el).toString())
     }
 
     return {
