@@ -134,3 +134,10 @@ it('can parse really big file', () => {
 
   expect(result.channels.length).toEqual(85)
 })
+
+it('return empty array if file is empty', () => {
+  let content = fs.readFileSync('test/data/empty.xml')
+  let result = parser.parse(content)
+
+  expect(result.channels.length).toEqual(0)
+})
