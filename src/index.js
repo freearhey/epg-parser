@@ -87,9 +87,14 @@ module.exports = {
   parse(source) {
     source = source.toString().replace(/&/g, '&amp;')
     const obj = convert.xml2js(source, { compact: false, trim: true })
-    const tv = obj.elements.find(el => el.name === 'tv')
-    const channels = tv.elements.filter(el => el.name === 'channel').map(el => new Channel(el))
-    const programs = tv.elements.filter(el => el.name === 'programme').map(el => new Programme(el))
+    let tv = {}
+    if (Array.isArray(obj.elements)) tv = obj.elements.find(el => el.name === 'tv')
+    let channels = []
+    let programs = []
+    if (Array.isArray(tv.elements)) {
+      channels = tv.elements.filter(el => el.name === 'channel').map(el => new Channel(el))
+      programs = tv.elements.filter(el => el.name === 'programme').map(el => new Programme(el))
+    }
 
     return {
       channels,
