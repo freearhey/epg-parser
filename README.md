@@ -1,42 +1,53 @@
-# epg-parser
+# epg-parser [![Build Status](https://app.travis-ci.com/freearhey/epg-parser.svg?branch=master)](https://app.travis-ci.com/freearhey/epg-parser)
 
 It parses EPG XMLTV files and converts it to a regular JavaScript object.
 
 ## Installation
 
-  ```sh
-  npm install epg-parser
-  ```
+```sh
+npm install epg-parser
+```
 
 ## Usage
 
-  ```js
-  import fs from 'fs'
-  import parser from 'epg-parser'
+```js
+import fs from 'fs'
+import parser from 'epg-parser'
 
-  const epg = fs.readFileSync('./epg.xml', { encoding: 'utf-8'})
-  const result = parser.parse(epg)
+const epg = fs.readFileSync('./epg.xml', { encoding: 'utf-8' })
+const result = parser.parse(epg)
 
-  console.log(result)
-  ```
+console.log(result)
+```
 
 ## Example
 
 Input:
 
 ```xml
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE tv SYSTEM "xmltv.dtd">
-<tv source-info-url="http://www.schedulesdirect.org/" source-info-name="Schedules Direct" generator-info-name="XMLTV/$Id: tv_grab_na_dd.in,v 1.70 2008/03/03 15:21:41 rmeden Exp $" generator-info-url="http://www.xmltv.org/">
+<tv
+  source-info-url="http://www.schedulesdirect.org/"
+  source-info-name="Schedules Direct"
+  generator-info-name="XMLTV/$Id: tv_grab_na_dd.in,v 1.70 2008/03/03 15:21:41 rmeden Exp $"
+  generator-info-url="http://www.xmltv.org/"
+>
   <channel id="I10436.labs.zap2it.com">
     <display-name lang="fr">13 KERA</display-name>
     <display-name lang="ar">13</display-name>
     <url>http://www.whatsonarabia.com</url>
     <icon src="https://i.imgur.com/kJCjeQ4.png" />
   </channel>
-  <programme start="20080715003000 -0600" stop="20080715010000 -0600" channel="I10436.labs.zap2it.com">
+  <programme
+    start="20080715003000 -0600"
+    stop="20080715010000 -0600"
+    channel="I10436.labs.zap2it.com"
+  >
     <title lang="en">NOW on PBS</title>
-    <desc lang="en">Jordan's Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East.</desc>
+    <desc
+      lang="en"
+    >Jordan's Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East.</desc>
     <date>20080711</date>
     <category lang="en">Newsmagazine</category>
     <category lang="en">Interview</category>
@@ -57,7 +68,9 @@ Input:
       <producer>Roger Dobkowitz</producer>
       <presenter>Drew Carey</presenter>
     </credits>
-    <icon src="http://imageswoapi.whatsonindia.com/WhatsOnTV/images/ProgramImages/xlarge/38B4DE4E9A7132257749051B6C8B4F699DB264F4V.jpg" />
+    <icon
+      src="http://imageswoapi.whatsonindia.com/WhatsOnTV/images/ProgramImages/xlarge/38B4DE4E9A7132257749051B6C8B4F699DB264F4V.jpg"
+    />
   </programme>
 </tv>
 ```
