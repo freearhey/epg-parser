@@ -1,6 +1,6 @@
 {
   "name": "epg-parser",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Node.js CLI tool to parse EPG files",
   "main": "src/index.js",
   "scripts": {
@@ -27,11 +27,12 @@
     "testRegex": "test/(.*?/)?.*test.js$"
   },
   "dependencies": {
+    "dayjs": "^1.11.6",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
-    "jest": "^24.9.0"
+    "jest": "^29.3.1"
   }
 }
