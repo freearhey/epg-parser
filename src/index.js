@@ -1,4 +1,12 @@
 const convert = require('xml-js')
+const dayjs = require('dayjs')
+const customParseFormat = require('dayjs/plugin/customParseFormat')
+
+dayjs.extend(customParseFormat)
+
+function parseTime(time) {
+  return dayjs(time, 'YYYYMMDDHHmmss ZZ')
+}
 
 class Model {
   constructor(data) {
@@ -21,7 +29,7 @@ class Model {
     delete channel._attributes
     delete channel._elements
 
-    return channel
+    return JSON.parse(JSON.stringify(channel))
   }
 }
 
@@ -40,8 +48,8 @@ class Programme extends Model {
   constructor(data) {
     super(data)
 
-    this.start = this._attributes.start
-    this.stop = this._attributes.stop
+    this.start = parseTime(this._attributes.start)
+    this.stop = parseTime(this._attributes.stop)
     this.channel = this._attributes.channel
 
     this.title = this._get('title')
