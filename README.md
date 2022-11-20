@@ -98,8 +98,8 @@ Output:
   ],
   programs: [
     {
-      start: '20080715003000 -0600',
-      stop: '20080715010000 -0600',
+      start: '2008-07-15T06:30:00.000Z',
+      stop: '2008-07-15T07:00:00.000Z',
       channel: 'I10436.labs.zap2it.com',
       title: [ { lang: 'en', value: 'NOW on PBS' } ],
       desc:
