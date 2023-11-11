@@ -79,12 +79,16 @@ class Programme extends Model {
     const credits = this._elements.find(el => el.name === 'credits')
     this.credits =
       credits && credits.elements.length
-        ? credits.elements.map(el => {
-            return {
-              role: el.name,
-              name: el.elements[0].text
-            }
-          })
+        ? credits.elements
+            .map(el => {
+              if (!el.elements) return
+
+              return {
+                role: el.name,
+                name: el.elements[0].text
+              }
+            })
+            .filter(Boolean)
         : []
 
     this.audio = this._elements
