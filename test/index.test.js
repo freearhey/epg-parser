@@ -66,10 +66,6 @@ it('can parse xmltv string', () => {
         credits: [
           {
             role: 'actor',
-            name: 'Peter Bergman'
-          },
-          {
-            role: 'actor',
             name: 'Eric Braeden'
           },
           {
