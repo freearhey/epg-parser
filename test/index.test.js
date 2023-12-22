@@ -1,7 +1,7 @@
 import parser from '../src'
 import fs from 'fs'
 
-it('can parse xmltv string', () => {
+fit('can parse xmltv string', () => {
   let content = fs.readFileSync('test/data/basic.xml')
   let result = parser.parse(content)
 
@@ -39,6 +39,7 @@ it('can parse xmltv string', () => {
         stop: '2008-07-15T07:00:00.000Z',
         channel: 'I10436.labs.zap2it.com',
         title: [{ lang: 'en', value: 'NOW on PBS' }],
+        subTitle: [{ lang: 'en', value: 'Pilot' }],
         desc: [
           {
             lang: 'en',
@@ -46,47 +47,151 @@ it('can parse xmltv string', () => {
               "Jordan's Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East."
           }
         ],
-        date: ['20080711'],
+        date: [{ value: '20080711' }],
         category: [
           { lang: 'en', value: 'Newsmagazine' },
           { lang: 'en', value: 'Interview' }
         ],
+        keyword: [
+          { lang: 'en', value: 'physical-comedy' },
+          { lang: 'en', value: 'romantic' }
+        ],
+        language: [{ value: 'English' }],
+        origLanguage: [{ lang: 'en', value: 'French' }],
+        length: [{ units: 'minutes', value: '60' }],
+        url: [
+          { system: 'imdb', value: 'https://example.com/programme_one' },
+          { value: 'https://example.com/programme_one_2' }
+        ],
+        country: [{ value: 'US' }],
+        video: [
+          {
+            present: 'yes',
+            colour: 'no',
+            aspect: '16:9',
+            quality: 'HDTV'
+          }
+        ],
+        audio: [{ present: 'yes', stereo: 'Dolby Digital' }],
         episodeNum: [
           { system: 'dd_progid', value: 'EP01006886.0028' },
           { system: 'onscreen', value: '427' }
         ],
-        previouslyShown: [{ start: '20080711000000' }],
-        subtitles: [{ type: 'teletext' }],
+        previouslyShown: [{ start: '20080711000000', channel: 'channel-two.tv' }],
+        premiere: [{ value: 'First time on British TV' }],
+        lastChance: [{ lang: 'en', value: 'Last time on this channel' }],
+        new: true,
+        subtitles: [
+          { type: 'teletext', language: 'English' },
+          { type: 'onscreen', language: 'Spanish' }
+        ],
         rating: [
           {
-            system: 'VCHIP',
-            value: 'TV-G'
+            system: 'BBFC',
+            value: '15'
+          },
+          {
+            system: 'MPAA',
+            value: 'NC-17',
+            icon: [{ src: 'NC-17_symbol.png' }]
+          }
+        ],
+        starRating: [
+          {
+            system: 'TV Guide',
+            value: '4/5',
+            icon: [{ src: 'stars.png' }]
+          },
+          {
+            system: 'IMDB',
+            value: '8/10'
+          }
+        ],
+        review: [
+          {
+            type: 'text',
+            source: 'Rotten Tomatoes',
+            reviewer: 'Joe Bloggs',
+            lang: 'en',
+            value: 'This is a fantastic show!'
+          },
+          {
+            type: 'text',
+            source: 'IDMB',
+            reviewer: 'Jane Doe',
+            lang: 'en',
+            value: 'I love this show!'
+          },
+          {
+            type: 'url',
+            source: 'Rotten Tomatoes',
+            reviewer: 'Joe Bloggs',
+            lang: 'en',
+            value: 'https://example.com/programme_one_review'
+          }
+        ],
+        image: [
+          {
+            type: 'poster',
+            size: '1',
+            orient: 'P',
+            system: 'tvdb',
+            value: 'https://tvdb.com/programme_one_poster_1.jpg'
+          },
+          {
+            type: 'poster',
+            size: '2',
+            orient: 'P',
+            system: 'tmdb',
+            value: 'https://tmdb.com/programme_one_poster_2.jpg'
+          },
+          {
+            type: 'backdrop',
+            size: '3',
+            orient: 'L',
+            system: 'tvdb',
+            value: 'https://tvdb.com/programme_one_backdrop_3.jpg'
+          },
+          {
+            type: 'backdrop',
+            size: '3',
+            orient: 'L',
+            system: 'tmdb',
+            value: 'https://tmdb.com/programme_one_backdrop_3.jpg'
           }
         ],
         credits: [
           {
-            role: 'actor',
-            name: 'Eric Braeden'
+            type: 'actor',
+            role: 'Walter Johnson',
+            name: 'David Thompson'
           },
           {
-            role: 'director',
+            type: 'actor',
+            role: 'Karl James',
+            guest: 'yes',
+            name: 'Ryan Lee',
+            image: [{ type: 'person', value: 'https://example.com/xxx.jpg' }],
+            url: [{ system: 'moviedb', value: 'https://example.com/person/204' }]
+          },
+          {
+            type: 'director',
             name: 'Bart Eskander'
           },
           {
-            role: 'producer',
+            type: 'producer',
             name: 'Roger Dobkowitz'
           },
           {
-            role: 'presenter',
+            type: 'presenter',
             name: 'Drew Carey'
           }
         ],
         icon: [
-          'http://imageswoapi.whatsonindia.com/WhatsOnTV/images/ProgramImages/xlarge/38B4DE4E9A7132257749051B6C8B4F699DB264F4V.jpg'
-        ],
-        audio: [
           {
-            stereo: 'stereo'
+            width: '100',
+            height: '100',
+            src: 'http://imageswoapi.whatsonindia.com/WhatsOnTV/images/ProgramImages/xlarge/38B4DE4E9A7132257749051B6C8B4F699DB264F4V.jpg'
           }
         ]
       },
@@ -95,6 +200,7 @@ it('can parse xmltv string', () => {
         stop: '2008-07-15T08:30:00.000Z',
         channel: 'I10759.labs.zap2it.com',
         title: [],
+        subTitle: [],
         desc: [],
         date: [],
         category: [],
@@ -102,8 +208,20 @@ it('can parse xmltv string', () => {
         previouslyShown: [],
         subtitles: [],
         rating: [],
+        starRating: [],
+        review: [],
+        url: [],
+        image: [],
         credits: [],
         audio: [],
+        video: [],
+        country: [],
+        keyword: [],
+        lastChance: [],
+        language: [],
+        length: [],
+        origLanguage: [],
+        premiere: [],
         icon: []
       }
     ]
