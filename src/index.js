@@ -10,28 +10,27 @@ function parseTime(time) {
 }
 
 function parseElement(el) {
-  const textElement =
-    el.elements && el.elements.length ? el.elements.find(el => el.type === 'text') : null
-  const value = textElement ? { value: textElement.text } : {}
+  let output = { ...el.attributes }
 
-  let elements =
-    el.elements && el.elements.length ? el.elements.filter(el => el.type === 'element') : []
+  if (!Array.isArray(el.elements)) return output
 
-  let attrs = {}
-  for (let el of elements) {
-    const textElement =
-      el.elements && el.elements.length ? el.elements.find(el => el.type === 'text') : null
-
-    if (textElement) {
-      attrs[el.name] = textElement.text
-    } else if (el.attributes) {
-      if (!attrs[el.name]) attrs[el.name] = []
-
-      attrs[el.name].push(el.attributes)
-    }
+  const textElement = el.elements.find(el => el.type === 'text')
+  if (textElement) {
+    output.value = textElement.text
   }
 
-  return { ...el.attributes, ...attrs, ...value }
+  const valueElement = el.elements.find(el => el.name === 'value')
+  if (!textElement && valueElement && Array.isArray(valueElement.elements)) {
+    output.value = valueElement.elements[0].text
+  }
+
+  let nestedElements = el.elements.filter(el => el.type !== 'text' && el.name !== 'value') || []
+  nestedElements = _.groupBy(nestedElements, 'name')
+  for (let name in nestedElements) {
+    output[name] = nestedElements[name].map(parseElement)
+  }
+
+  return output
 }
 
 class Model {
@@ -40,8 +39,29 @@ class Model {
     this._elements = data.elements || []
   }
 
-  _get(name) {
+  _getArray(name) {
     return this._elements.filter(el => el.name === name).map(parseElement)
+  }
+
+  _getObject(name) {
+    const found = this._elements.find(el => el.name === name)
+
+    return found ? parseElement(found) : {}
+  }
+
+  _getString(name) {
+    const el = this._elements.find(el => el.name === name)
+    if (!el || !Array.isArray(el.elements)) return null
+    const textElement = el.elements.find(el => el.type === 'text')
+    if (!textElement) return null
+
+    return textElement.text
+  }
+
+  _getBoolean(name) {
+    const found = this._elements.find(el => el.name === name)
+
+    return found ? true : false
   }
 
   toObject() {
@@ -58,9 +78,10 @@ class Channel extends Model {
     super(data)
 
     this.id = this._attributes.id
-    this.name = this._get('display-name')
-    this.icon = this._get('icon').map(el => el.src)
-    this.url = this._get('url').map(el => el.value)
+    this.displayName = this._getArray('display-name')
+    this.icon = this._getArray('icon')
+    this.url = this._getArray('url')
+    this.lcn = this._getArray('lcn')
   }
 }
 
@@ -72,45 +93,31 @@ class Programme extends Model {
     this.stop = parseTime(this._attributes.stop)
     this.channel = this._attributes.channel
 
-    this.title = this._get('title')
-    this.subTitle = this._get('sub-title')
-    this.desc = this._get('desc')
-    this.category = this._get('category')
-    this.date = this._get('date')
-    this.episodeNum = this._get('episode-num')
-    this.previouslyShown = this._get('previously-shown')
-    this.icon = this._get('icon')
-    this.image = this._get('image')
-    this.url = this._get('url')
-    this.review = this._get('review')
-    this.premiere = this._get('premiere')
-    this.country = this._get('country')
-    this.origLanguage = this._get('orig-language')
-    this.language = this._get('language')
-    this.length = this._get('length')
-    this.lastChance = this._get('last-chance')
-    this.keyword = this._get('keyword')
-    this.video = this._get('video')
-    this.audio = this._get('audio')
-    this.rating = this._get('rating')
-    this.starRating = this._get('star-rating')
-    this.subtitles = this._get('subtitles')
-
-    const credits = this._elements.find(el => el.name === 'credits')
-    this.credits =
-      credits && credits.elements.length
-        ? credits.elements
-            .map(el => {
-              if (!el.elements) return
-
-              return {
-                type: el.name,
-                role: el.attributes.role,
-                name: el.elements[0].text
-              }
-            })
-            .filter(Boolean)
-        : []
+    this.title = this._getArray('title')
+    this.subTitle = this._getArray('sub-title')
+    this.desc = this._getArray('desc')
+    this.category = this._getArray('category')
+    this.date = this._getString('date')
+    this.episodeNum = this._getArray('episode-num')
+    this.previouslyShown = this._getArray('previously-shown')
+    this.icon = this._getArray('icon')
+    this.image = this._getArray('image')
+    this.url = this._getArray('url')
+    this.review = this._getArray('review')
+    this.premiere = this._getArray('premiere')
+    this.country = this._getArray('country')
+    this.origLanguage = this._getArray('orig-language')
+    this.language = this._getArray('language')
+    this.length = this._getArray('length')
+    this.lastChance = this._getArray('last-chance')
+    this.keyword = this._getArray('keyword')
+    this.video = this._getObject('video')
+    this.audio = this._getObject('audio')
+    this.rating = this._getArray('rating')
+    this.starRating = this._getArray('star-rating')
+    this.subtitles = this._getArray('subtitles')
+    this.credits = this._getObject('credits')
+    this.new = this._getBoolean('new')
   }
 }
 

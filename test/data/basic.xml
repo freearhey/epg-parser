@@ -4,8 +4,10 @@
   <channel id="I10436.labs.zap2it.com">
     <display-name lang="fr">13 KERA</display-name>
     <display-name lang="ar">13</display-name>
-    <url>http://www.whatsonarabia.com</url>
-    <icon src="https://i.imgur.com/kJCjeQ4.png" />
+    <icon src="https://example.com/channel_one_icon.jpg" width="100" height="100" />
+    <url system="example">https://example.com/channel_one</url>
+    <url system="other_system">https://example.com/channel_one_alternate</url>
+    <lcn>36</lcn>
   </channel>
   <channel id="I10759.labs.zap2it.com">
     <display-name>11 KTVT</display-name>

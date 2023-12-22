@@ -1,7 +1,7 @@
 import parser from '../src'
 import fs from 'fs'
 
-fit('can parse xmltv string', () => {
+it('can parse xmltv string', () => {
   let content = fs.readFileSync('test/data/basic.xml')
   let result = parser.parse(content)
 
@@ -9,7 +9,7 @@ fit('can parse xmltv string', () => {
     channels: [
       {
         id: 'I10436.labs.zap2it.com',
-        name: [
+        displayName: [
           {
             lang: 'fr',
             value: '13 KERA'
@@ -19,18 +19,23 @@ fit('can parse xmltv string', () => {
             value: '13'
           }
         ],
-        icon: ['https://i.imgur.com/kJCjeQ4.png'],
-        url: ['http://www.whatsonarabia.com']
+        icon: [{ src: 'https://example.com/channel_one_icon.jpg', width: '100', height: '100' }],
+        url: [
+          { system: 'example', value: 'https://example.com/channel_one' },
+          { system: 'other_system', value: 'https://example.com/channel_one_alternate' }
+        ],
+        lcn: [{ value: '36' }]
       },
       {
         id: 'I10759.labs.zap2it.com',
-        name: [
+        displayName: [
           {
             value: '11 KTVT'
           }
         ],
         icon: [],
-        url: []
+        url: [],
+        lcn: []
       }
     ],
     programs: [
@@ -47,7 +52,7 @@ fit('can parse xmltv string', () => {
               "Jordan's Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East."
           }
         ],
-        date: [{ value: '20080711' }],
+        date: '20080711',
         category: [
           { lang: 'en', value: 'Newsmagazine' },
           { lang: 'en', value: 'Interview' }
@@ -64,15 +69,16 @@ fit('can parse xmltv string', () => {
           { value: 'https://example.com/programme_one_2' }
         ],
         country: [{ value: 'US' }],
-        video: [
-          {
-            present: 'yes',
-            colour: 'no',
-            aspect: '16:9',
-            quality: 'HDTV'
-          }
-        ],
-        audio: [{ present: 'yes', stereo: 'Dolby Digital' }],
+        video: {
+          present: [{ value: 'yes' }],
+          colour: [{ value: 'no' }],
+          aspect: [{ value: '16:9' }],
+          quality: [{ value: 'HDTV' }]
+        },
+        audio: {
+          present: [{ value: 'yes' }],
+          stereo: [{ value: 'Dolby Digital' }]
+        },
         episodeNum: [
           { system: 'dd_progid', value: 'EP01006886.0028' },
           { system: 'onscreen', value: '427' }
@@ -82,8 +88,8 @@ fit('can parse xmltv string', () => {
         lastChance: [{ lang: 'en', value: 'Last time on this channel' }],
         new: true,
         subtitles: [
-          { type: 'teletext', language: 'English' },
-          { type: 'onscreen', language: 'Spanish' }
+          { type: 'teletext', language: [{ value: 'English' }] },
+          { type: 'onscreen', language: [{ lang: 'en', value: 'Spanish' }] }
         ],
         rating: [
           {
@@ -160,33 +166,33 @@ fit('can parse xmltv string', () => {
             value: 'https://tmdb.com/programme_one_backdrop_3.jpg'
           }
         ],
-        credits: [
-          {
-            type: 'actor',
-            role: 'Walter Johnson',
-            name: 'David Thompson'
-          },
-          {
-            type: 'actor',
-            role: 'Karl James',
-            guest: 'yes',
-            name: 'Ryan Lee',
-            image: [{ type: 'person', value: 'https://example.com/xxx.jpg' }],
-            url: [{ system: 'moviedb', value: 'https://example.com/person/204' }]
-          },
-          {
-            type: 'director',
-            name: 'Bart Eskander'
-          },
-          {
-            type: 'producer',
-            name: 'Roger Dobkowitz'
-          },
-          {
-            type: 'presenter',
-            name: 'Drew Carey'
-          }
-        ],
+        credits: {
+          actor: [
+            {},
+            {
+              role: 'Walter Johnson',
+              value: 'David Thompson'
+            },
+            {
+              role: 'Karl James',
+              guest: 'yes',
+              value: 'Ryan Lee',
+              image: [{ type: 'person', value: 'https://example.com/xxx.jpg' }],
+              url: [{ system: 'moviedb', value: 'https://example.com/person/204' }]
+            }
+          ],
+          director: [
+            {
+              value: 'Bart Eskander'
+            }
+          ],
+          producer: [
+            {
+              value: 'Roger Dobkowitz'
+            }
+          ],
+          presenter: [{ value: 'Drew Carey' }]
+        },
         icon: [
           {
             width: '100',
@@ -202,7 +208,7 @@ fit('can parse xmltv string', () => {
         title: [],
         subTitle: [],
         desc: [],
-        date: [],
+        date: null,
         category: [],
         episodeNum: [],
         previouslyShown: [],
@@ -212,9 +218,9 @@ fit('can parse xmltv string', () => {
         review: [],
         url: [],
         image: [],
-        credits: [],
-        audio: [],
-        video: [],
+        credits: {},
+        audio: {},
+        video: {},
         country: [],
         keyword: [],
         lastChance: [],
@@ -222,7 +228,8 @@ fit('can parse xmltv string', () => {
         length: [],
         origLanguage: [],
         premiere: [],
-        icon: []
+        icon: [],
+        new: false
       }
     ]
   })
