@@ -70,14 +70,14 @@ it('can parse xmltv string', () => {
         ],
         country: [{ value: 'US' }],
         video: {
-          present: [{ value: 'yes' }],
-          colour: [{ value: 'no' }],
-          aspect: [{ value: '16:9' }],
-          quality: [{ value: 'HDTV' }]
+          present: 'yes',
+          colour: 'no',
+          aspect: '16:9',
+          quality: 'HDTV'
         },
         audio: {
-          present: [{ value: 'yes' }],
-          stereo: [{ value: 'Dolby Digital' }]
+          present: 'yes',
+          stereo: 'Dolby Digital'
         },
         episodeNum: [
           { system: 'dd_progid', value: 'EP01006886.0028' },
