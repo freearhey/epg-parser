@@ -49,6 +49,18 @@ class Model {
     return found ? parseElement(found) : {}
   }
 
+  _getFlatObject(name) {
+    const found = this._elements.find(el => el.name === name)
+    if (!found) return {}
+    const element = parseElement(found)
+    const output = {}
+    for (let name in element) {
+      output[name] = element[name][0].value
+    }
+
+    return output
+  }
+
   _getString(name) {
     const el = this._elements.find(el => el.name === name)
     if (!el || !Array.isArray(el.elements)) return null
@@ -111,8 +123,8 @@ class Programme extends Model {
     this.length = this._getArray('length')
     this.lastChance = this._getArray('last-chance')
     this.keyword = this._getArray('keyword')
-    this.video = this._getObject('video')
-    this.audio = this._getObject('audio')
+    this.video = this._getFlatObject('video')
+    this.audio = this._getFlatObject('audio')
     this.rating = this._getArray('rating')
     this.starRating = this._getArray('star-rating')
     this.subtitles = this._getArray('subtitles')
