@@ -1,6 +1,6 @@
 const convert = require('xml-js')
 const dayjs = require('dayjs')
-const _ = require('lodash')
+const groupBy = require('lodash.groupby')
 const customParseFormat = require('dayjs/plugin/customParseFormat')
 
 dayjs.extend(customParseFormat)
@@ -25,7 +25,7 @@ function parseElement(el) {
   }
 
   let nestedElements = el.elements.filter(el => el.type !== 'text' && el.name !== 'value') || []
-  nestedElements = _.groupBy(nestedElements, 'name')
+  nestedElements = groupBy(nestedElements, 'name')
   for (let name in nestedElements) {
     output[name] = nestedElements[name].map(parseElement)
   }
