@@ -27,7 +27,7 @@ Input:
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE tv SYSTEM "xmltv.dtd">
-<tv source-info-url="http://www.schedulesdirect.org/" source-info-name="Schedules Direct" generator-info-name="XMLTV/$Id: tv_grab_na_dd.in,v 1.70 2008/03/03 15:21:41 rmeden Exp $" generator-info-url="http://www.xmltv.org/">
+<tv date="20220401000000 +0000" source-info-url="http://www.schedulesdirect.org/" source-info-name="Schedules Direct" generator-info-name="XMLTV/$Id: tv_grab_na_dd.in,v 1.70 2008/03/03 15:21:41 rmeden Exp $" generator-info-url="http://www.xmltv.org/">
   <channel id="I10436.labs.zap2it.com">
     <display-name lang="fr">13 KERA</display-name>
     <display-name lang="ar">13</display-name>
@@ -115,6 +115,12 @@ Output:
 
 ```js
 {
+    date: '2022-04-01T00:00:00.000Z',
+    sourceInfoUrl: "http://www.schedulesdirect.org/",
+    sourceInfoName: "Schedules Direct",
+    generatorInfoName: "XMLTV/$Id: tv_grab_na_dd.in,v 1.70 2008/03/03 15:21:41 rmeden Exp $",
+    generatorInfoUrl: "http://www.xmltv.org/",
+
     channels: [
       {
         id: 'I10436.labs.zap2it.com',
@@ -136,6 +142,7 @@ Output:
         lcn: [{ value: '36' }]
       }
     ],
+
     programs: [
       {
         start: '2008-07-15T06:30:00.000Z',
@@ -150,7 +157,7 @@ Output:
               "Jordan's Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East."
           }
         ],
-        date: '20080711',
+        date: '2008-07-11T00:00:00.000Z',
         category: [
           { lang: 'en', value: 'Newsmagazine' },
           { lang: 'en', value: 'Interview' }
