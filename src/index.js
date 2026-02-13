@@ -1,12 +1,23 @@
 const convert = require('xml-js')
 const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
 const groupBy = require('lodash.groupby')
 const customParseFormat = require('dayjs/plugin/customParseFormat')
 
 dayjs.extend(customParseFormat)
+dayjs.extend(utc)
 
 function parseTime(time) {
-  return dayjs(time, 'YYYYMMDDHHmmss ZZ')
+  if (!time) return null
+
+  switch (time.length) {
+    case 8:
+      return dayjs.utc(time, 'YYYYMMDD').toJSON()
+    case 6:
+      return dayjs.utc(time, 'YYYYMM').toJSON()
+    default:
+      return dayjs.utc(time, 'YYYYMMDDHHmmss ZZ').toJSON()
+  }
 }
 
 function parseElement(el) {
@@ -109,7 +120,7 @@ class Programme extends Model {
     this.subTitle = this._getArray('sub-title')
     this.desc = this._getArray('desc')
     this.category = this._getArray('category')
-    this.date = this._getString('date')
+    this.date = parseTime(this._getString('date'))
     this.episodeNum = this._getArray('episode-num')
     this.previouslyShown = this._getArray('previously-shown')
     this.icon = this._getArray('icon')
@@ -139,20 +150,30 @@ module.exports = {
     const obj = convert.xml2js(source, { compact: false, trim: true })
     let tv = {}
     if (Array.isArray(obj.elements)) tv = obj.elements.find(el => el.name === 'tv')
-    let channels = []
-    let programs = []
+
+    let output = {
+      channels: [],
+      programs: []
+    }
+
     if (Array.isArray(tv.elements)) {
-      channels = tv.elements
+      output.channels = tv.elements
         .filter(el => el.name === 'channel')
         .map(el => new Channel(el).toObject())
-      programs = tv.elements
+      output.programs = tv.elements
         .filter(el => el.name === 'programme')
         .map(el => new Programme(el).toObject())
     }
 
-    return {
-      channels,
-      programs
+    if (tv.attributes) {
+      output.date = tv.attributes.date ? parseTime(tv.attributes.date) : undefined
+      output.sourceInfoName = tv.attributes['source-info-name']
+      output.sourceInfoUrl = tv.attributes['source-info-url']
+      output.sourceDataUrl = tv.attributes['source-data-url']
+      output.generatorInfoName = tv.attributes['generator-info-name']
+      output.generatorInfoUrl = tv.attributes['generator-info-url']
     }
+
+    return output
   }
 }
