@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE tv SYSTEM "xmltv.dtd">
-<tv source-info-url="http://www.schedulesdirect.org/" source-info-name="Schedules Direct" generator-info-name="XMLTV/$Id: tv_grab_na_dd.in,v 1.70 2008/03/03 15:21:41 rmeden Exp $" generator-info-url="http://www.xmltv.org/">
+<tv date="20220401000000 +0000" source-info-name="example" source-info-url="example.com" source-data-url="example.com/a" generator-info-name="Example Generator"
+  generator-info-url="https://example.com">
   <channel id="I10436.labs.zap2it.com">
     <display-name lang="fr">13 KERA</display-name>
     <display-name lang="ar">13</display-name>
