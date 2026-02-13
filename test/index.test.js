@@ -6,6 +6,12 @@ it('can parse xmltv string', () => {
   let result = parser.parse(content)
 
   expect(result).toEqual({
+    date: '2022-04-01T00:00:00.000Z',
+    sourceInfoName: 'example',
+    sourceInfoUrl: 'example.com',
+    sourceDataUrl: 'example.com/a',
+    generatorInfoName: 'Example Generator',
+    generatorInfoUrl: 'https://example.com',
     channels: [
       {
         id: 'I10436.labs.zap2it.com',
@@ -52,7 +58,7 @@ it('can parse xmltv string', () => {
               "Jordan's Queen Rania has made job creation a priority to help curb the staggering unemployment rates among youths in the Middle East."
           }
         ],
-        date: '20080711',
+        date: '2008-07-11T00:00:00.000Z',
         category: [
           { lang: 'en', value: 'Newsmagazine' },
           { lang: 'en', value: 'Interview' }
