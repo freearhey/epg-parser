@@ -27,7 +27,7 @@
     "testRegex": "test/(.*?/)?.*test.js$"
   },
   "dependencies": {
-    "dayjs": "^1.11.6",
+    "dayjs": "^1.11.19",
     "lodash.groupby": "^4.6.0",
     "xml-js": "^1.6.11"
   },
